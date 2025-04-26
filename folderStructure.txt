@@ -1,0 +1,22 @@
+mass-reader-scheduler/
+├── assets/
+│   ├── css/
+│   ├── js/
+│   └── images/
+├── includes/
+│   ├── db.php          <-- DB connection
+│   ├── auth.php        <-- Session/auth check
+│   └── mailer.php      <-- PHPMailer config
+├── templates/
+│   └── header.php
+│   └── footer.php
+├── pages/
+│   ├── dashboard.php
+│   ├── assign.php
+│   ├── calendar.php
+│   └── availability.php
+├── index.php
+├── login.php
+├── register.php
+├── logout.php
+└── README.md
