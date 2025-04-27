@@ -1,22 +1,37 @@
 mass-reader-scheduler/
+│
 ├── assets/
 │   ├── css/
+│   │   └── style.css        <-- Main stylesheet
 │   ├── js/
-│   └── images/
+│   │   └── scripts.js       <-- Custom JavaScript (optional)
+│   └── images/              <-- Images, logos, icons
+│
 ├── includes/
-│   ├── db.php          <-- DB connection
-│   ├── auth.php        <-- Session/auth check
-│   └── mailer.php      <-- PHPMailer config
+│   ├── db.php               <-- Database connection
+│   ├── auth.php             <-- Authentication/session checking
+│   ├── mailer.php           <-- PHPMailer setup for emailing
+│   └── config.php           <-- App config (timezone, constants)
+│
 ├── templates/
-│   └── header.php
-│   └── footer.php
+│   ├── header.php           <-- Common HTML <head> and navbar
+│   └── footer.php           <-- Common footer and closing tags
+│
 ├── pages/
-│   ├── dashboard.php
-│   ├── assign.php
-│   ├── calendar.php
-│   └── availability.php
-├── index.php
-├── login.php
-├── register.php
-├── logout.php
-└── README.md
+│   ├── dashboard.php        <-- Main dashboard after login
+│   ├── assign.php           <-- Assign readers to Mass slots
+│   ├── calendar.php         <-- Visual calendar view
+│   └── availability.php     <-- Reader availability form/page
+│
+├── errors/
+│   ├── 404.php              <-- Custom "Page Not Found"
+│   └── 500.php              <-- Custom "Internal Server Error"
+│
+├── index.php                <-- Landing page (maybe welcome/about)
+├── login.php                <-- User login
+├── register.php             <-- User registration
+├── logout.php               <-- User logout
+├── forgot-password.php      <-- Request password reset
+├── update-password.php      <-- Handle password update
+│
+└── README.md                <-- Project overview/documentation
