@@ -5,7 +5,7 @@ include '../templates/header.php';
 
 // Fetch upcoming lectures
 $stmt = $conn->query('SELECT * FROM lectures ORDER BY date ASC LIMIT 5');
-$lectures = $stmt->fetchAll();
+//$lectures = $stmt->fetchAll();
 ?>
 
 <h2>Dashboard</h2>
