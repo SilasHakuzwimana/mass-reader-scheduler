@@ -1,37 +1,30 @@
-mass-reader-scheduler/
+├── includes/                  # PHP helper files (reusable)
+│   ├── db.php                  # Database connection (using $conn)
+│   ├── auth.php                # Session and user authentication checks
+│   ├── mailer.php              # PHPMailer setup for sending emails (forgot password, notifications)
 │
-├── assets/
-│   ├── css/
-│   │   └── style.css        <-- Main stylesheet
-│   ├── js/
-│   │   └── scripts.js       <-- Custom JavaScript (optional)
-│   └── images/              <-- Images, logos, icons
+├── pages/                      # Dashboard and special feature pages
+│   ├── admin_dashboard.php     # Dashboard for Admin users (system management)
+│   ├── coordinator_dashboard.php # Dashboard for Coordinators (manage readers, assign tasks)
+│   ├── reader_dashboard.php    # Dashboard for Readers (view assignments, availability)
+│   ├── assign.php              # Page to assign readers to Mass events
+│   ├── calendar.php            # Calendar view for scheduled Mass readings
+│   └── availability.php        # Page for readers to submit/update their availability
 │
-├── includes/
-│   ├── db.php               <-- Database connection
-│   ├── auth.php             <-- Authentication/session checking
-│   ├── mailer.php           <-- PHPMailer setup for emailing
-│   └── config.php           <-- App config (timezone, constants)
+├── templates/                  # Common frontend templates
+│   ├── header.php              # Top HTML template (starts <html>, <head>, navbar, etc.)
+│   ├── footer.php              # Bottom HTML template (closes page, includes JS files)
 │
-├── templates/
-│   ├── header.php           <-- Common HTML <head> and navbar
-│   └── footer.php           <-- Common footer and closing tags
+├── assets/                     # Static files (CSS, JavaScript, Images)
+│   ├── css/                    # Custom stylesheets
+│   ├── js/                     # Custom JavaScript files
+│   └── images/                 # Logo, backgrounds, and other images
 │
-├── pages/
-│   ├── dashboard.php        <-- Main dashboard after login
-│   ├── assign.php           <-- Assign readers to Mass slots
-│   ├── calendar.php         <-- Visual calendar view
-│   └── availability.php     <-- Reader availability form/page
+├── login.php                   # User login page (form + processing login)
+├── dashboard_router.php        # Handles user role and redirects to correct dashboard after login
+├── register.php                 # New user registration form and process
+├── forgot-password.php          # Page to initiate password reset (by email link)
+├── update-password.php          # Page to set a new password after password reset
+├── logout.php                   # Log the user out by destroying session
 │
-├── errors/
-│   ├── 404.php              <-- Custom "Page Not Found"
-│   └── 500.php              <-- Custom "Internal Server Error"
-│
-├── index.php                <-- Landing page (maybe welcome/about)
-├── login.php                <-- User login
-├── register.php             <-- User registration
-├── logout.php               <-- User logout
-├── forgot-password.php      <-- Request password reset
-├── update-password.php      <-- Handle password update
-│
-└── README.md                <-- Project overview/documentation
+└── README.md                   # Project description and setup instructions

@@ -1,0 +1,42 @@
+/* Custom styles for the toast */
+.custom-toast {
+    width: 400px; /* Set the width for the toast */
+    font-size: 1.1rem; /* Slightly bigger text */
+    background-color: #28a745; /* Greenish background */
+    color: white;
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.toast-header {
+    background-color: #218838; /* Darker green for the header */
+    color: white;
+    border-radius: 10px 10px 0 0;
+}
+
+.toast-body {
+    background-color: #28a745; /* Same green as body */
+    color: white;
+}
+
+.toast-body .btn-close {
+    color: white; /* Close button color */
+}
+
+/* Animation for toast appearance */
+.toast {
+    animation: toastAnimation 0.5s ease-in-out;
+}
+
+@keyframes toastAnimation {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Optional: If you want the toast to be hidden on logout, you could add additional logic to hide it or adjust its appearance */

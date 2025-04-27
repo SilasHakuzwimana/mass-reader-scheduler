@@ -4,7 +4,7 @@ require_once '../includes/db.php';
 include '../templates/header.php';
 
 // Fetch upcoming lectures
-$stmt = $pdo->query('SELECT * FROM lectures ORDER BY date ASC LIMIT 5');
+$stmt = $conn->query('SELECT * FROM lectures ORDER BY date ASC LIMIT 5');
 $lectures = $stmt->fetchAll();
 ?>
 
