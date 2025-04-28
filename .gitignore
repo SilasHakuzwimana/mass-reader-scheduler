@@ -1,0 +1,4 @@
+#ignore tracking environment variables
+
+git rm --cached includes/.env
+git rm --cached includes/configure.php
