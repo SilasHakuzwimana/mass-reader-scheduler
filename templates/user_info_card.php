@@ -34,16 +34,16 @@ $badge_class = match (strtolower($user_role)) {
                 <i class="fas fa-user-circle fa-spin me-2 text-info"></i>User Details:
             </p>
             <h5 class="card-title mb-1">
-                <i class="fas fa-user fa-spin me-2 text-primary"></i><?= htmlspecialchars($user_name) ?>
+                <i class="fas fa-user fa-spin me-2 text-primary"></i> <?= htmlspecialchars($user_name) ?>
             </h5>
             <p class="card-text mb-0">
-                <i class="fas fa-id-badge fa-spin me-2 text-warning"></i><strong>ID:</strong> <?= htmlspecialchars($user_id) ?>
+                <i class="fas fa-id-badge fa-spin me-2 text-warning"></i> <strong>ID: </strong> <?= htmlspecialchars($user_id) ?>
             </p>
             <p class="card-text mb-0">
-                <i class="fas fa-envelope fa-spin me-2 text-success"></i><strong>Email:</strong> <?= htmlspecialchars($user_email) ?>
+                <i class="fas fa-envelope fa-spin me-2 text-success"></i> <strong>Email: </strong> <?= htmlspecialchars($user_email) ?>
             </p>
             <p class="card-text mb-0">
-                <i class="fas fa-user-tag fa-spin me-2 text-danger"></i><strong>Role:</strong> 
+                <i class="fas fa-user-tag fa-spin me-2 text-danger"></i> <strong>Role: </strong> 
                 <span class="badge <?= $badge_class ?>"><?= ucfirst(htmlspecialchars($user_role)) ?></span>
             </p>
         </div>

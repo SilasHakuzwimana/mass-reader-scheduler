@@ -6,7 +6,7 @@ date_default_timezone_set('Africa/Kigali');
 $host = "localhost";
 $user = "root"; 
 $pass = "";     
-$dbname = "mass_scheduler";
+$dbname = "if0_38626920_stbasile_db";
 
 // Create connection
 $conn = new mysqli($host, $user, $pass, $dbname);

@@ -23,7 +23,7 @@ $error_messages = [
     'failed' => 'Failed to assign reader. Please try again.',
 ];
 
-$error_message = isset($error_messages[$error_code]) ? $error_messages[$error_code] : $error_messages['default'];
+$error_message = isset($error_messages[$error_code]) ? $error_messages[$error_code] : $error_messages['failed'];
 ?>
 
 <div class="container mt-5">

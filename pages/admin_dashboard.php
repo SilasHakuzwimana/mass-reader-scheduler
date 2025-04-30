@@ -26,19 +26,6 @@ if ($_SESSION['role'] !== 'admin') {
             </div>
         </div>
 
-        <!-- Event Management Section -->
-        <div class="col-md-6 col-lg-4">
-            <div class="card">
-                <div class="card-header">Event Management</div>
-                <div class="card-body">
-                    <a href="events.php" class="btn btn-primary manage-btn" onclick="showLoader(event, this)">
-                        <i class="fa fa-calendar-alt"></i> Manage Events
-                        <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
-                    </a>
-                </div>
-            </div>
-        </div>
-
         <!-- Reports Section -->
         <div class="col-md-6 col-lg-4">
             <div class="card">

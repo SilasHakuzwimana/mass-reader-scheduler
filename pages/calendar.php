@@ -1,5 +1,5 @@
 <?php 
-session_start();
+// session_start();
 require_once '../includes/db.php';
 require_once '../includes/auth.php';
 include '../templates/header.php';
