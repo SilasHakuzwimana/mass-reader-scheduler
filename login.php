@@ -1,5 +1,6 @@
 <?php
 session_start();
+date_default_timezone_set('Africa/Kigali'); // Use Africa/Kigali timezone
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -7,40 +8,55 @@ error_reporting(E_ALL);
 
 require_once 'includes/db.php';
 
-$error = '';  // Initialize error message as an empty string
+$error = '';
 $email = '';
 
-// Check if there's an error message from the previous attempt and clear it after the next page load.
+// Check and display previous error
 if (isset($_SESSION['login_error'])) {
     $error = $_SESSION['login_error'];
-    unset($_SESSION['login_error']);  // Clear the error after showing it
+    unset($_SESSION['login_error']);
 }
+
+// Capture IP Address
+$ip_address = $_SERVER['REMOTE_ADDR'];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = trim($_POST['email']);
     $password = $_POST['password'];
 
-    // Prepare and execute the query to fetch user from the database
     $stmt = $conn->prepare('SELECT * FROM users WHERE email = ?');
     $stmt->bind_param('s', $email);
     $stmt->execute();
     $result = $stmt->get_result();
     $user = $result->fetch_assoc();
 
-    // Check if the user exists and the password matches
     if ($user && password_verify($password, $user['password'])) {
+        // Store session data
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['user_name'] = $user['names'];
         $_SESSION['email'] = $user['email'];
-        $_SESSION['role'] = strtolower($user['role']); // lowercase for consistency
+        $_SESSION['role'] = strtolower($user['role']);
 
-        // Redirect based on user role
+        // Log successful login
+        $log_stmt = $conn->prepare("INSERT INTO logs (user_id, names, email, user_name, action, ip_address, created_at)
+                                    VALUES (?, ?, ?, ?, ?, ?, NOW())");
+        $action = "User logged in";
+        $log_stmt->bind_param("isssss", $user['id'], $user['names'], $user['email'], $user['names'], $action, $ip_address);
+        $log_stmt->execute();
+
         header('Location: dashboard_router.php');
         exit;
     } else {
-        // Error handling if credentials are invalid
-        $_SESSION['login_error'] = 'Invalid login credentials.';  // Store error in session for next load
-        header('Location: login.php');  // Redirect back to login page with error
+        // Log failed login
+        $action = "Failed login attempt for email: $email";
+        $log_stmt = $conn->prepare("INSERT INTO logs (user_id, names, email, user_name, action, ip_address, created_at)
+                                    VALUES (?, ?, ?, ?, ?, ?, NOW())");
+        $null = null;
+        $log_stmt->bind_param("isssss", $null, $email, $email, $email, $action, $ip_address);
+        $log_stmt->execute();
+
+        $_SESSION['login_error'] = 'Invalid login credentials.';
+        header('Location: login.php');
         exit;
     }
 }
@@ -52,11 +68,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <title>Login | St. Basile</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Bootstrap CSS -->
+    <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome for eye icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-    <!-- Custom CSS -->
     <link rel="stylesheet" href="assets/css/styles.css">
     <style>
         .password-toggle {
@@ -80,7 +94,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="card-body p-4">
                     <h3 class="text-center mb-4">Login to St. Basile</h3>
 
-                    <!-- Display error message if there's any -->
                     <?php if (!empty($error)): ?>
                         <div class="alert alert-danger"><?= htmlspecialchars($error) ?></div>
                     <?php endif; ?>
@@ -121,9 +134,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 </div>
 
-<!-- Bootstrap Bundle JS -->
+<!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<!-- Password Toggle Script -->
 <script>
     function togglePassword() {
         const passwordField = document.getElementById('password');
@@ -140,12 +152,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             toggleIcon.classList.add('fa-eye-slash');
         }
     }
-</script>
-<script>
-    function redirectToRegister(){
+
+    function redirectToRegister() {
         window.location.href = 'register.php';
     }
-    function redirectToForgotPassword(){
+
+    function redirectToForgotPassword() {
         window.location.href = 'forgot-password.php';
     }
 </script>

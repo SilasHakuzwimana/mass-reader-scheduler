@@ -39,6 +39,19 @@ if ($_SESSION['role'] !== 'admin') {
             </div>
         </div>
 
+        <!-- System Analytics Section -->
+        <div class="col-md-6 col-lg-4">
+            <div class="card">
+                <div class="card-header">System Analytics</div>
+                <div class="card-body">
+                    <a href="analytics.php" class="btn btn-primary manage-btn" onclick="showLoader(event, this)">
+                        <i class="fa-solid fa-chart-pie"></i> System Analytics
+                        <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
         <!-- System Configuration Section -->
         <div class="col-md-6 col-lg-4">
             <div class="card">
@@ -58,23 +71,23 @@ if ($_SESSION['role'] !== 'admin') {
 <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 
 <script>
-// Function to show the loader spinner when the link is clicked
-function showLoader(event, element) {
-    // Prevent default action of link
-    event.preventDefault();
-    
-    // Show spinner and disable the button
-    var spinner = element.querySelector('.spinner-border');
-    spinner.classList.remove('d-none');
-    
-    // Disable the button to prevent multiple clicks
-    element.classList.add('disabled');
-    
-    // Wait for 1 second (simulating the loading process) and then redirect
-    setTimeout(function() {
-        window.location.href = element.href;
-    }, 1000); // Adjust the delay as needed
-}
+    // Function to show the loader spinner when the link is clicked
+    function showLoader(event, element) {
+        // Prevent default action of link
+        event.preventDefault();
+
+        // Show spinner and disable the button
+        var spinner = element.querySelector('.spinner-border');
+        spinner.classList.remove('d-none');
+
+        // Disable the button to prevent multiple clicks
+        element.classList.add('disabled');
+
+        // Wait for 1 second (simulating the loading process) and then redirect
+        setTimeout(function() {
+            window.location.href = element.href;
+        }, 1000); // Adjust the delay as needed
+    }
 </script>
 
 <?php include '../templates/footer.php'; ?>
