@@ -1,5 +1,4 @@
 <?php
-require_once '../templates/header.php';
 session_start();
 
 // Set the default timezone to Africa/Kigali
@@ -93,8 +92,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome for icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+    <!-- System Icon -->
+    <link rel="icon" href="assets/images/reader-icon.png">
+    
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="stylesheet" href="assets/css/register.css">
     <style>
         .spinner-border-sm {
