@@ -1,15 +1,45 @@
 <?php
-require_once 'includes/auth.php';
 include 'templates/header.php';
 ?>
 
-<h2>Welcome to the Mass Reader Scheduling App</h2>
-<p>This application allows you to manage and assign readers for daily mass lectures.</p>
+<!-- Landing Page Custom Style -->
+<!-- FontAwesome Icons -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/indexstyles.css">
+<style>
+   
+</style>
 
-<div class="btn-group">
-    <a href="pages/assign.php" class="btn btn-primary">Assign Reader</a>
-    <a href="pages/calendar.php" class="btn btn-primary">View Calendar</a>
-    <a href="pages/availability.php" class="btn btn-primary">Manage Availability</a>
-</div>
+<!-- Hero Section -->
+<section class="hero">
+    <h1>Welcome to the Mass Reader Scheduling App</h1>
+    <p>Manage and organize daily mass readings with ease and efficiency.</p>
+    <a href="/login" class="btn btn-primary-custom">Get Started</a>
+</section>
+
+<!-- Features Section -->
+<section class="features">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-md-4 feature">
+                <img src="assets/images/schedule.png" alt="Calendar Icon"/>
+                <h3>Easy Scheduling</h3>
+                <p>Quickly assign readers for daily and weekly masses with just a few clicks.</p>
+            </div>
+            <div class="col-md-4 feature">
+                <img src="assets/images/reader.png" alter="Reader Icon" >
+                <h3>Manage Readers</h3>
+                <p>Track reader availability, preferences, and assignments all in one place.</p>
+            </div>
+            <div class="col-md-4 feature">
+                <img src="assets/images/shield.png" alt="Shield Icon"/>
+                <h3>Secure Access</h3>
+                <p>Role-based access for coordinators, readers, and admins with most secure authentication &amp; authorization.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer Section -->
 
 <?php include 'templates/footer.php'; ?>
