@@ -21,9 +21,10 @@ $error_code = isset($_GET['error']) ? $_GET['error'] : '';
 $error_messages = [
     'reader_assigned' => 'This reader is already assigned to the selected mass.',
     'failed' => 'Failed to assign reader. Please try again.',
+    'default'=> 'Readers ready to be assigned!',
 ];
 
-$error_message = isset($error_messages[$error_code]) ? $error_messages[$error_code] : $error_messages['failed'];
+$error_message = isset($error_messages[$error_code]) ? $error_messages[$error_code] : $error_messages['default'];
 ?>
 
 <div class="container mt-5">
