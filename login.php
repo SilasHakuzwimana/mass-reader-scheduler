@@ -158,7 +158,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     function redirectToForgotPassword() {
-        window.location.href = 'forgot-password.php';
+        window.location.href = 'password_reset_request.php';
     }
 </script>
 </body>

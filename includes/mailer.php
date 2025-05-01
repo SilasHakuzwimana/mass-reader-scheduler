@@ -1,26 +1,34 @@
 <?php
-use PHPMailer\PHPMailer\PHPMailer;
+
 use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
 
-require_once __DIR__ . '/../vendor/autoload.php';
+require 'PHPMailer/src/Exception.php';
+require 'PHPMailer/src/PHPMailer.php';
+require 'PHPMailer/src/SMTP.php';
+require_once 'config.php';
 
-function sendMail($to, $subject, $bodyHtml) {
+function sendMail($to, $subject, $bodyHtml)
+{
     $mail = new PHPMailer(true);
     try {
-        // Server settings
+        // Enable debugging if needed
+        // $mail->SMTPDebug = SMTP::DEBUG_SERVER;
+        // $mail->Debugoutput = 'error_log';
+
         $mail->isSMTP();
-        $mail->Host       = 'smtp.gmail.com'; 
+        $mail->Host       = MAILHOST;
         $mail->SMTPAuth   = true;
-        $mail->Username   = 'info.stbasile@gmail.com';
-        $mail->Password   = '';
-        $mail->SMTPSecure = 'tls'; 
-        $mail->Port       = 587;   
+        $mail->Username   = USERNAME;
+        $mail->Password   = PASSWORD;
+        $mail->SMTPSecure = 'tls';
+        $mail->Port       = PORT;
 
-        // Sender and recipient
-        $mail->setFrom('info.stbasile@gmail.com', 'Mass Scheduler');
+        $mail->setFrom(SEND_FROM, 'St. Basile Community Readers Scheduler System');
         $mail->addAddress($to);
+        $mail->addReplyTo(SEND_FROM, 'St. Basile Support');
 
-        // Content
         $mail->isHTML(true);
         $mail->Subject = $subject;
         $mail->Body    = $bodyHtml;
@@ -32,4 +40,3 @@ function sendMail($to, $subject, $bodyHtml) {
         return false;
     }
 }
-?>

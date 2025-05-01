@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $username = $row['names'];
 
         $token = bin2hex(random_bytes(50));
-        $resetLink = "https://stbasile.ct.ws/update-password.php?token=$token";
+        $resetLink = "http://localhost/mass_reader_scheduler/update-password.php?token=$token";
         $expiration = (new DateTime('now', new DateTimeZone('Africa/Kigali')))
                         ->add(new DateInterval('PT10M'))
                         ->format('Y-m-d H:i:s');
@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $cleanup->execute();
 
         $insert = $conn->prepare("INSERT INTO password_resets (names, email, token, reset_link, expiration_time, created_at) VALUES (?, ?, ?, ?, ?, ?)");
-        $insert->bind_param("ssssss", $username, $email, $token, $resetLink, $expiration, $current_time);
+        $insert->bind_param("ssssss",$username, $email, $token, $resetLink, $expiration, $current_time);
 
         if ($insert->execute()) {
             $subject = "🔐 Password Reset Request";

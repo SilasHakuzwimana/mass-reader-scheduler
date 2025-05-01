@@ -10,7 +10,7 @@ define('MAILHOST', 'smtp.gmail.com');
 define('USERNAME', 'infinitytechnologiesltd8@gmail.com');
 define('PASSWORD', 'utcu nrvk nuzh ywao');
 define('SEND_FROM', 'infinitytechnologiesltd8@gmail.com');
-define('WEBSITE_NAME', "Nyina wa Jambo Song Management System");
+define('WEBSITE_NAME', "St. Basile Community readers scheduler System");
 ?>
 
 <?php
