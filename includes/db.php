@@ -1,12 +1,13 @@
 <?php
+require_once 'config.php';
 // Set timezone
 date_default_timezone_set('Africa/Kigali');
 
 // Database configuration
-$host = "localhost";
-$user = "root"; 
-$pass = "";     
-$dbname = "if0_38626920_stbasile_db";
+$host = HOST;
+$user = USER; 
+$pass = PASS;     
+$dbname = DB_NAME;
 
 // Create connection
 $conn = new mysqli($host, $user, $pass, $dbname);

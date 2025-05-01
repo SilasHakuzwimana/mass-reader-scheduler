@@ -22,4 +22,12 @@ define('PORT', 587);
 
 define('SECRET_KEY','6Lf8ryorAAAAADHXbLqL9TXXAVL5nnX444XPH5yU');
 define('SITE_KEY',value: '6Lf8ryorAAAAANKDcwYVp4KhkZAO-oL2gNAetasD');
+
+
+//DB Constants
+
+define('HOST','localhost');
+define('USER','root');
+define('PASS','');
+define('DB_NAME','if0_38626920_stbasile_db');
 ?>
