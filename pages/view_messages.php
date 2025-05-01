@@ -155,41 +155,56 @@ $result = $stmt->get_result();
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        // Filter reload
-        $('#filter-form select').on('change', function() {
-            const filter = $('#filter').val();
-            const status = $('#status').val();
-            const sender = $('#sender').val();
-            $.get('view_messages.php', {
-                filter: filter,
-                status: status,
-                sender: sender
-            }, function(data) {
-                $('#message-list').html($(data).find('#message-list').html());
-            });
+<script>
+    // Filter reload
+    $('#filter-form select').on('change', function() {
+        const filter = $('#filter').val();
+        const status = $('#status').val();
+        const sender = $('#sender').val();
+        $.get('messages_ajax.php', {
+            filter: filter,
+            status: status,
+            sender: sender
+        }, function(data) {
+            $('#message-list').html($(data).find('#message-list').html());
         });
+    });
 
-        // Mark as read
-        $(document).on('click', '.mark-read-btn', function() {
-            const btn = $(this);
-            const id = btn.data('id');
-            $.post('mark_as_read.php', {
-                message_id: id
-            }, function(response) {
-                if (response === 'success') {
-                    btn.closest('.message-item')
-                        .find('.message-status')
-                        .removeClass('unread')
-                        .addClass('read')
-                        .text('Read');
-                    btn.remove();
-                } else {
-                    alert('Error marking as read');
-                }
-            });
+    // Auto-refresh messages every 10 seconds
+    setInterval(function() {
+        const filter = $('#filter').val();
+        const status = $('#status').val();
+        const sender = $('#sender').val();
+        $.get('messages_ajax.php', {
+            filter: filter,
+            status: status,
+            sender: sender,
+            t: new Date().getTime()
+        }, function(data) {
+            $('#message-list').html($(data).find('#message-list').html());
         });
-    </script>
+    }, 1000); // 1 seconds
+
+    // Mark as read
+    $(document).on('click', '.mark-read-btn', function() {
+        const btn = $(this);
+        const id = btn.data('id');
+        $.post('mark_as_read.php', {
+            message_id: id
+        }, function(response) {
+            if (response === 'success') {
+                btn.closest('.message-item')
+                    .find('.message-status')
+                    .removeClass('unread')
+                    .addClass('read')
+                    .text('Read');
+                btn.remove();
+            } else {
+                alert('Error marking as read');
+            }
+        });
+    });
+</script>
 </body>
 
 </html>

@@ -54,6 +54,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Notify sender of the message sent and remove the sender copy from the database
         $toast_message = "Message sent successfully!";
         $toast_class = "toast-success";
+        header("Location: view_messages.php");
+        exit;
     } else {
         $toast_message = "Please enter a message.";
         $toast_class = "toast-error";
