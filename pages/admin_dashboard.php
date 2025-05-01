@@ -8,7 +8,16 @@ if ($_SESSION['role'] !== 'admin') {
     header('Location: ../login.php');
     exit;
 }
+
+// Fetch unread messages count
+$unread_messages_stmt = $conn->prepare("SELECT COUNT(*) AS unread_count FROM messages WHERE receiver_id = ? AND status = 'unread'");
+$unread_messages_stmt->bind_param("i", $_SESSION['user_id']);
+$unread_messages_stmt->execute();
+$unread_messages_result = $unread_messages_stmt->get_result();
+$unread_messages = $unread_messages_result->fetch_assoc();
 ?>
+
+<?php include '../templates/user_info_card.php'; ?>
 
 <div class="container mt-5">
     <h1 class="mb-4">Admin Dashboard</h1>
@@ -48,6 +57,35 @@ if ($_SESSION['role'] !== 'admin') {
                         <i class="fa-solid fa-chart-pie"></i> System Analytics
                         <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
                     </a>
+                </div>
+            </div>
+        </div>
+        <!-- Messages Cards -->
+
+        <!-- Send Message Card -->
+        <div class="col-md-6 col-lg-4">
+            <div class="card shadow-sm">
+                <div class="card-header text-center fw-bold">
+                    <i class="bi bi-envelope-fill me-2"></i> Send Message
+                </div>
+                <div class="card-body text-center">
+                    <h4 class="card-title">Send a Message</h4>
+                    <p class="card-text">Communicate with coordinators, readers, or admins.</p>
+                    <a href="send_message.php" class="btn btn-primary"><i class="fa-solid fa-paper-plane"></i> Compose Message</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- View Messages Card -->
+        <div class="col-md-6 col-lg-4">
+            <div class="card shadow-sm">
+                <div class="card-header text-center fw-bold">
+                    <i class="bi bi-envelope me-2"></i> Messages
+                </div>
+                <div class="card-body text-center">
+                    <h4 class="card-title"><?= $unread_messages['unread_count'] ?> New Message<?= ($unread_messages['unread_count'] > 1 ? 's' : '') ?></h4>
+                    <p class="card-text"><?= ($unread_messages['unread_count'] > 0) ? 'You have unread messages from your coordinator.' : 'No new messages.' ?></p>
+                    <a href="view_messages.php" class="btn btn-primary"><i class="fa-solid fa-glasses"></i> View Messages</a>
                 </div>
             </div>
         </div>

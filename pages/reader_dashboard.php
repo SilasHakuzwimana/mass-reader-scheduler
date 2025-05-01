@@ -15,6 +15,13 @@ $stmt->execute();
 $user_result = $stmt->get_result();
 $user = $user_result->fetch_assoc();
 
+// Fetch unread messages count
+$unread_messages_stmt = $conn->prepare("SELECT COUNT(*) AS unread_count FROM messages WHERE receiver_id = ? AND status = 'unread'");
+$unread_messages_stmt->bind_param("i", $_SESSION['user_id']);
+$unread_messages_stmt->execute();
+$unread_messages_result = $unread_messages_stmt->get_result();
+$unread_messages = $unread_messages_result->fetch_assoc();
+
 // Greeting based on time
 $hour = date("H");
 if ($hour >= 5 && $hour < 12) {
@@ -27,6 +34,7 @@ if ($hour >= 5 && $hour < 12) {
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -46,89 +54,121 @@ if ($hour >= 5 && $hour < 12) {
         }
     </style>
 </head>
+
 <body>
-<div class="container mt-5">
-    <h1 class="mb-4">Reader Dashboard</h1>
+    <div class="container mt-5">
+        <h1 class="mb-4">Reader Dashboard</h1>
 
-    <!-- Greeting Toast -->
-    <div class="toast-container position-fixed top-0 end-0 p-3">
-        <div id="greetingToast" class="toast show custom-toast" role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="toast-header">
-                <strong class="me-auto"><?= htmlspecialchars($greeting) ?>, <?= htmlspecialchars($user['names']) ?>!</strong>
-                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        <!-- Greeting Toast -->
+        <div class="toast-container position-fixed top-0 end-0 p-3">
+            <div id="greetingToast" class="toast show custom-toast" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                    <strong class="me-auto"><?= htmlspecialchars($greeting) ?>, <?= htmlspecialchars($user['names']) ?>!</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    We are happy to have you back! Enjoy your day.
+                </div>
             </div>
-            <div class="toast-body">
-                We are happy to have you back! Enjoy your day.
+        </div>
+
+        <?php include '../templates/user_info_card.php'; ?>
+
+        <div class="row">
+            <!-- Upcoming Tasks Section -->
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-header"><i class="fas fa-tasks me-2"></i>Upcoming Tasks</div>
+                    <div class="card-body text-center">
+                        <button onclick="redirectWithSpinner('tasks.php')" class="btn btn-primary">
+                            <i class="fas fa-eye me-2"></i>View Tasks
+                            <div class="spinner-border spinner-border-sm ms-2" role="status"></div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Availability Section -->
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-header"><i class="fas fa-calendar-check me-2"></i>Submit Availability</div>
+                    <div class="card-body text-center">
+                        <button onclick="redirectWithSpinner('availability.php')" class="btn btn-success">
+                            <i class="fas fa-paper-plane me-2"></i>Submit Availability
+                            <div class="spinner-border spinner-border-sm ms-2" role="status"></div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Messages Cards -->
+
+            <!-- Send Message Card -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card shadow-sm">
+                    <div class="card-header text-center fw-bold">
+                        <i class="bi bi-envelope-fill me-2"></i> Send Message
+                    </div>
+                    <div class="card-body text-center">
+                        <h4 class="card-title">Send a Message</h4>
+                        <p class="card-text">Communicate with coordinators, readers, or admins.</p>
+                        <a href="send_message.php" class="btn btn-primary"><i class="fa-solid fa-paper-plane"></i> Compose Message</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- View Messages Card -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card shadow-sm">
+                    <div class="card-header text-center fw-bold">
+                        <i class="bi bi-envelope me-2"></i> Messages
+                    </div>
+                    <div class="card-body text-center">
+                        <h4 class="card-title"><?= $unread_messages['unread_count'] ?> New Message<?= ($unread_messages['unread_count'] > 1 ? 's' : '') ?></h4>
+                        <p class="card-text"><?= ($unread_messages['unread_count'] > 0) ? 'You have unread messages from your coordinator.' : 'No new messages.' ?></p>
+                        <a href="view_messages.php" class="btn btn-primary"><i class="fa-solid fa-glasses"></i> View Messages</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile Management Section -->
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-header"><i class="fas fa-user-cog me-2"></i>Profile Management</div>
+                    <div class="card-body text-center">
+                        <button onclick="redirectWithSpinner('profile.php')" class="btn btn-warning">
+                            <i class="fas fa-user-edit me-2"></i>Update Profile
+                            <div class="spinner-border spinner-border-sm ms-2" role="status"></div>
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <?php include '../templates/user_info_card.php'; ?>
+    <?php include '../templates/footer.php'; ?>
 
-    <div class="row">
-        <!-- Upcoming Tasks Section -->
-        <div class="col-md-6 col-lg-4 mb-4">
-            <div class="card shadow-sm">
-                <div class="card-header"><i class="fas fa-tasks me-2"></i>Upcoming Tasks</div>
-                <div class="card-body text-center">
-                    <button onclick="redirectWithSpinner('tasks.php')" class="btn btn-primary">
-                        <i class="fas fa-eye me-2"></i>View Tasks
-                        <div class="spinner-border spinner-border-sm ms-2" role="status"></div>
-                    </button>
-                </div>
-            </div>
-        </div>
+    <!-- Bootstrap Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-        <!-- Availability Section -->
-        <div class="col-md-6 col-lg-4 mb-4">
-            <div class="card shadow-sm">
-                <div class="card-header"><i class="fas fa-calendar-check me-2"></i>Submit Availability</div>
-                <div class="card-body text-center">
-                    <button onclick="redirectWithSpinner('availability.php')" class="btn btn-success">
-                        <i class="fas fa-paper-plane me-2"></i>Submit Availability
-                        <div class="spinner-border spinner-border-sm ms-2" role="status"></div>
-                    </button>
-                </div>
-            </div>
-        </div>
+    <!-- Custom JS -->
+    <script>
+        // Show greeting toast for 3 seconds
+        var greetingToast = new bootstrap.Toast(document.getElementById('greetingToast'));
+        greetingToast.show();
+        setTimeout(() => greetingToast.hide(), 3000);
 
-        <!-- Profile Management Section -->
-        <div class="col-md-6 col-lg-4 mb-4">
-            <div class="card shadow-sm">
-                <div class="card-header"><i class="fas fa-user-cog me-2"></i>Profile Management</div>
-                <div class="card-body text-center">
-                    <button onclick="redirectWithSpinner('profile.php')" class="btn btn-warning">
-                        <i class="fas fa-user-edit me-2"></i>Update Profile
-                        <div class="spinner-border spinner-border-sm ms-2" role="status"></div>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+        // Redirect with loading spinner
+        function redirectWithSpinner(url) {
+            const button = event.currentTarget;
+            const spinner = button.querySelector('.spinner-border');
+            spinner.style.display = 'inline-block'; // Show spinner
 
-<?php include '../templates/footer.php'; ?>
-
-<!-- Bootstrap Bundle JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
-<!-- Custom JS -->
-<script>
-    // Show greeting toast for 3 seconds
-    var greetingToast = new bootstrap.Toast(document.getElementById('greetingToast'));
-    greetingToast.show();
-    setTimeout(() => greetingToast.hide(), 3000);
-
-    // Redirect with loading spinner
-    function redirectWithSpinner(url) {
-        const button = event.currentTarget;
-        const spinner = button.querySelector('.spinner-border');
-        spinner.style.display = 'inline-block'; // Show spinner
-
-        setTimeout(() => {
-            window.location.href = url;
-        }, 1000); // Wait 1 second to show spinner before redirect
-    }
-</script>
+            setTimeout(() => {
+                window.location.href = url;
+            }, 1000); // Wait 1 second to show spinner before redirect
+        }
+    </script>
 </body>
+
 </html>

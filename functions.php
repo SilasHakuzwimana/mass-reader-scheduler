@@ -8,7 +8,7 @@ require 'PHPMailer/src/PHPMailer.php';
 require 'PHPMailer/src/SMTP.php';
 
 
-require_once '../configure.php';
+require_once '../config.php';
 
 /*
 The function uses the PHPMailer object to send an email to the address we specify
