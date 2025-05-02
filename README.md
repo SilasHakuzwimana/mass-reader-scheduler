@@ -1,5 +1,4 @@
-
-# 🎯 Mass Reader Scheduling App
+# 🎯 Mass Reader Scheduling App - V1
 
 Welcome to the **Mass Reader Scheduling System** — a web-based platform designed to **manage readers, events, and system settings** efficiently and securely.
 Built with **PHP**, **MySQL**, **Bootstrap 5**, and **FontAwesome**, it ensures a smooth admin experience with role-based access control.
@@ -114,4 +113,3 @@ This project is licensed under the **MIT License** — see the [LICENSE](LICENSE
 # 🔥 Live Demo (Optional)
 
 > Coming soon... Stay tuned! 😉
->
