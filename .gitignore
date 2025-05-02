@@ -3,3 +3,5 @@
 git rm --cached includes/.env
 git rm --cached includes/configure.php
 git rm --cached includes/config.php
+
+/includes/
